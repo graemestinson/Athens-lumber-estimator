@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Athens Lumber Estimator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .output {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Athens Lumber Estimator</h1>
+
+<label for="type">Lumber Type:</label>
+<select id="type">
+  <option value="2x4">2x4</option>
+  <option value="2x6">2x6</option>
+  <option value="4x4">4x4</option>
+  <option value="plywood">Plywood Sheet</option>
+  <option value="pressureTreated">Pressure Treated</option>
+</select>
+
+<label for="length">Length:</label>
+<select id="length">
+  <option value="8">8 ft</option>
+  <option value="10">10 ft</option>
+  <option value="12">12 ft</option>
+</select>
+
+<label for="quantity">Quantity:</label>
+<input type="number" id="quantity" placeholder="Enter quantity" />
+
+<label for="rate">Market Rate ($/unit):</label>
+<input type="number" id="rate" placeholder="e.g. 3.25" step="0.01" />
+
+<label for="markup">Markup % (optional):</label>
+<input type="number" id="markup" placeholder="e.g. 10" step="0.1" />
+
+<button onclick="calculateCost()">Estimate Cost</button>
+
+<div class="output" id="output"></div>
+
+<script>
+  function calculateCost() {
+    const quantity = parseFloat(document.getElementById('quantity').value);
+    const rate = parseFloat(document.getElementById('rate').value);
+    const markup = parseFloat(document.getElementById('markup').value) || 0;
+
+    if (isNaN(quantity) || isNaN(rate)) {
+      document.getElementById('output').textContent = 'Please enter valid quantity and market rate.';
+      return;
+    }
+
+    const basePrice = quantity * rate;
+    const finalPrice = basePrice * (1 + markup / 100);
+
+    document.getElementById('output').innerHTML = `
+      Base Price: $${basePrice.toFixed(2)}<br>
+      Final Price (with ${markup}% markup): $${finalPrice.toFixed(2)}
+    `;
+  }
+</script>
+
+</body>
+</html>
