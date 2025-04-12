@@ -123,7 +123,7 @@
   let priceData = {};
 
   // Load prices from prices.json
-  fetch('prices.json')
+  fetch('https://graemestinson.github.io/Athens-lumber-estimator/prices.json')
     .then(response => response.json())
     .then(data => {
       priceData = data;
