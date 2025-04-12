@@ -119,7 +119,52 @@
       Final Price (with ${markup}% markup): $${finalPrice.toFixed(2)}
     `;
   }
-</script>
+<<script>
+  let priceData = {};
+
+  // Load prices from prices.json
+  fetch('prices.json')
+    .then(response => response.json())
+    .then(data => {
+      priceData = data;
+      updateRate();
+    });
+
+  // Update market rate input based on dropdowns
+  function updateRate() {
+    const type = document.getElementById('type').value;
+    const length = document.getElementById('length').value;
+
+    if (priceData[type] && priceData[type][length]) {
+      document.getElementById('rate').value = priceData[type][length];
+    } else {
+      document.getElementById('rate').value = '';
+    }
+  }
+
+  // Attach updateRate to dropdown changes
+  document.getElementById('type').addEventListener('change', updateRate);
+  document.getElementById('length').addEventListener('change', updateRate);
+
+  function calculateCost() {
+    const quantity = parseFloat(document.getElementById('quantity').value);
+    const rate = parseFloat(document.getElementById('rate').value);
+    const markup = parseFloat(document.getElementById('markup').value) || 0;
+
+    if (isNaN(quantity) || isNaN(rate)) {
+      document.getElementById('output').textContent = 'Please enter valid quantity and market rate.';
+      return;
+    }
+
+    const basePrice = quantity * rate;
+    const finalPrice = basePrice * (1 + markup / 100);
+
+    document.getElementById('output').innerHTML = `
+      Base Price: $${basePrice.toFixed(2)}<br>
+      Final Price (with ${markup}% markup): $${finalPrice.toFixed(2)}
+    `;
+  }
+</script>>
 
 </body>
 </html>
