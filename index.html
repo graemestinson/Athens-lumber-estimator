@@ -126,10 +126,12 @@
   fetch('https://graemestinson.github.io/Athens-lumber-estimator/prices.json')
     .then(response => response.json())
     .then(data => {
-      priceData = data;
-      updateRate();
+        // your logic using `data`
+    })
+    .catch(error => {
+        console.error('Error loading price data:', error);
     });
-
+//fix fetch url
   // Update market rate input based on dropdowns
   function updateRate() {
     const type = document.getElementById('type').value;
